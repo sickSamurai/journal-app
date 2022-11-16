@@ -7,7 +7,8 @@ export const journalSlice = createSlice({
 
   initialState: <JournalState>{
     notes: new Array<Note>(),
-    isSaving: false
+    isSaving: false,
+    isSideBarOpen: false
   },
 
   reducers: {
@@ -44,6 +45,14 @@ export const journalSlice = createSlice({
     cleanData(state) {
       state.notes = []
       state.activeNote = null
+    },
+
+    openSideBar(state) {
+      state.isSideBarOpen = true
+    },
+
+    closeSideBar(state) {
+      state.isSideBarOpen = false
     }
   }
 })

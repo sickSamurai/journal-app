@@ -1,7 +1,7 @@
 import { postImagesToCloudinary } from '../../api/cloudinary'
 import { createEmptyNoteOnDB, deleteNoteOnDB, getNotesFromDB, updateNoteOnDB } from '../../firebase/dbServices'
 import { Note } from '../../types'
-import { VoidThunkAction } from '../../types/VoidThunkAction'
+import { VoidThunkAction } from '../types/VoidThunkAction'
 import { journalSlice } from './journalSlice'
 
 export const {
@@ -12,7 +12,9 @@ export const {
   setNotes,
   updateNote,
   deleteActiveNote,
-  cleanData
+  cleanData,
+  openSideBar,
+  closeSideBar
 } = journalSlice.actions
 
 export function loadNotesThunk(userId: string): VoidThunkAction {
@@ -23,7 +25,7 @@ export function loadNotesThunk(userId: string): VoidThunkAction {
 
 export function createEmptyNoteThunk(): VoidThunkAction {
   return async (dispatch, getState) => {
-    const actualUser = getState().AuthReducer.user
+    const actualUser = getState().authReducer.user
     if (actualUser == null) throw new Error("The user can't be null at this point!!!")
 
     dispatch(startSaving())
@@ -36,7 +38,7 @@ export function createEmptyNoteThunk(): VoidThunkAction {
 
 export function updateNoteThunk(note: Note): VoidThunkAction {
   return async (dispatch, getState) => {
-    const actualUser = getState().AuthReducer.user
+    const actualUser = getState().authReducer.user
     if (actualUser === null) throw new Error("The user can't be null at this point!!!")
 
     dispatch(startSaving())
@@ -49,7 +51,7 @@ export function updateNoteThunk(note: Note): VoidThunkAction {
 
 export function uploadImagesThunk(files: FileList): VoidThunkAction {
   return async (dispatch, getState) => {
-    const { activeNote } = getState().JournalReducer
+    const { activeNote } = getState().journalReducer
     if (!activeNote) throw new Error('Something going bad: ActiveNote must not be null nor undefined at this point!!!')
 
     dispatch(startSaving())
@@ -62,8 +64,8 @@ export function uploadImagesThunk(files: FileList): VoidThunkAction {
 
 export function deleteActiveNoteThunk(): VoidThunkAction {
   return async (dispatch, getState) => {
-    const actualUser = getState().AuthReducer.user
-    const activeNote = getState().JournalReducer.activeNote
+    const actualUser = getState().authReducer.user
+    const activeNote = getState().journalReducer.activeNote
 
     if (!activeNote) throw new Error('Something going bad: ActiveNote must not be null nor undefined at this point!!!')
     if (!actualUser) throw new Error('Something going bad: ActualUser must not be null nor undefined at this point!!!')

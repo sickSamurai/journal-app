@@ -1,14 +1,13 @@
-import { onAuthStateChanged } from 'firebase/auth'
+import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth'
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
 import { FirebaseAuth } from '../firebase'
 import { login, logout } from '../redux/auth'
+import { useMyDispatch, useMySelector } from '../redux/hooks'
 import { loadNotesThunk } from '../redux/journal'
-import { StoreDispatch, StoreState } from '../redux/store'
 import { User } from '../types'
 
-const getUser = (firebaseUser: User): User => ({
+const toUser = (firebaseUser: FirebaseUser): User => ({
   uid: firebaseUser.uid,
   displayName: firebaseUser?.displayName,
   email: firebaseUser?.email,
@@ -16,13 +15,13 @@ const getUser = (firebaseUser: User): User => ({
 })
 
 export const useAuthCheck = () => {
-  const { authStatus } = useSelector((state: StoreState) => state.AuthReducer)
-  const dispatch = useDispatch<StoreDispatch>()
+  const { authStatus } = useMySelector(state => state.authReducer)
+  const dispatch = useMyDispatch()
 
   useEffect(() => {
     onAuthStateChanged(FirebaseAuth, firebaseUser => {
       if (firebaseUser != null) {
-        const actualUser = getUser(firebaseUser)
+        const actualUser = toUser(firebaseUser)
         dispatch(login(actualUser))
         dispatch(loadNotesThunk(actualUser.uid))
       } else dispatch(logout())

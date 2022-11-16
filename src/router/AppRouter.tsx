@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import AuthRoutes from '../auth/routes/AuthRoutes'
 import { useAuthCheck } from '../hooks/useAuthCheck'
-import { JournalRoutes } from '../journal/routes/JournalRoutes'
+import AuthRoutes from '../modules/auth/routes/AuthRoutes'
+import { JournalRoutes } from '../modules/journal/routes/JournalRoutes'
 import { LoadingPage } from '../pages/LoadingPage'
 
 const AppRouter = () => {

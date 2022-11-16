@@ -6,12 +6,12 @@ import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 
-import { store } from './redux/store'
+import { Store } from './redux/store'
 import AppRouter from './router/AppRouter'
 import { MainTheme } from './themes/MainTheme'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <Provider store={store}>
+  <Provider store={Store}>
     <BrowserRouter>
       <ThemeProvider theme={MainTheme}>
         <AppRouter />

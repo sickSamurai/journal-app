@@ -1,4 +1,4 @@
 export * from './User'
 export * from './Note'
-export * from './AuthState'
-export * from './JournalState'
+export * from '../redux/auth/AuthState'
+export * from '../redux/journal/JournalState'

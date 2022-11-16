@@ -1,5 +1,5 @@
 import { tryGoogleSignIn, tryRegister, trySignIn } from '../../firebase'
-import { VoidThunkAction } from '../../types/VoidThunkAction'
+import { VoidThunkAction } from '../types/VoidThunkAction'
 import { authSlice } from './authSlice'
 
 export const { startChecking, login, logout, fail, cleanErrors } = authSlice.actions
