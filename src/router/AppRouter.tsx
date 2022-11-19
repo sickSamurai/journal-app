@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import { useAuthCheck } from '../hooks/useAuthCheck'
 import AuthRoutes from '../modules/auth/routes/AuthRoutes'
 import { JournalRoutes } from '../modules/journal/routes/JournalRoutes'
-import { LoadingPage } from '../pages/LoadingPage'
+import { useAuthCheck } from '../modules/shared/hooks/useAuthCheck'
+import { LoadingPage } from '../modules/shared/pages/LoadingPage'
 
 const AppRouter = () => {
   const { authStatus } = useAuthCheck()

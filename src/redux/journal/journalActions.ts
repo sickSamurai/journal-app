@@ -1,7 +1,7 @@
 import { postImagesToCloudinary } from '../../api/cloudinary'
 import { createEmptyNoteOnDB, deleteNoteOnDB, getNotesFromDB, updateNoteOnDB } from '../../firebase/dbServices'
 import { Note } from '../../types'
-import { VoidThunkAction } from '../types/VoidThunkAction'
+import { MyThunkAction } from '../types/MyThunkAction'
 import { journalSlice } from './journalSlice'
 
 export const {
@@ -17,13 +17,13 @@ export const {
   closeSideBar
 } = journalSlice.actions
 
-export function loadNotesThunk(userId: string): VoidThunkAction {
+export function loadNotesThunk(userId: string): MyThunkAction {
   return async dispatch => {
     dispatch(setNotes(await getNotesFromDB(userId)))
   }
 }
 
-export function createEmptyNoteThunk(): VoidThunkAction {
+export function createEmptyNoteThunk(): MyThunkAction {
   return async (dispatch, getState) => {
     const actualUser = getState().authReducer.user
     if (actualUser == null) throw new Error("The user can't be null at this point!!!")
@@ -36,7 +36,7 @@ export function createEmptyNoteThunk(): VoidThunkAction {
   }
 }
 
-export function updateNoteThunk(note: Note): VoidThunkAction {
+export function updateNoteThunk(note: Note): MyThunkAction {
   return async (dispatch, getState) => {
     const actualUser = getState().authReducer.user
     if (actualUser === null) throw new Error("The user can't be null at this point!!!")
@@ -49,10 +49,11 @@ export function updateNoteThunk(note: Note): VoidThunkAction {
   }
 }
 
-export function uploadImagesThunk(files: FileList): VoidThunkAction {
+export function uploadImagesThunk(files: FileList): MyThunkAction {
   return async (dispatch, getState) => {
     const { activeNote } = getState().journalReducer
-    if (!activeNote) throw new Error('Something going bad: ActiveNote must not be null nor undefined at this point!!!')
+    if (!activeNote)
+      throw new Error('Something going bad: ActiveNote must not be null nor undefined at this point!!!')
 
     dispatch(startSaving())
     const uploadedImages = await postImagesToCloudinary(files)
@@ -62,13 +63,15 @@ export function uploadImagesThunk(files: FileList): VoidThunkAction {
   }
 }
 
-export function deleteActiveNoteThunk(): VoidThunkAction {
+export function deleteActiveNoteThunk(): MyThunkAction {
   return async (dispatch, getState) => {
     const actualUser = getState().authReducer.user
     const activeNote = getState().journalReducer.activeNote
 
-    if (!activeNote) throw new Error('Something going bad: ActiveNote must not be null nor undefined at this point!!!')
-    if (!actualUser) throw new Error('Something going bad: ActualUser must not be null nor undefined at this point!!!')
+    if (!activeNote)
+      throw new Error('Something going bad: ActiveNote must not be null nor undefined at this point!!!')
+    if (!actualUser)
+      throw new Error('Something going bad: ActualUser must not be null nor undefined at this point!!!')
 
     dispatch(deleteActiveNote())
     await deleteNoteOnDB(actualUser.uid, activeNote.id)

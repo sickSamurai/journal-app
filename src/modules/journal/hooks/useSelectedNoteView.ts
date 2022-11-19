@@ -3,7 +3,7 @@ import { ChangeEvent, DetailedHTMLProps, HTMLInputTypeAttribute, InputHTMLAttrib
 
 import { useMyDispatch, useMySelector } from '../../../redux/hooks'
 import { deleteActiveNoteThunk, uploadImagesThunk } from '../../../redux/journal'
-import { MainTheme } from '../../../themes/MainTheme'
+import { MainTheme } from '../../shared/themes/MainTheme'
 
 type ReactInputProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 

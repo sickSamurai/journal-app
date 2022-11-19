@@ -20,23 +20,28 @@ export const SelectedNoteView = (): JSX.Element => {
   } = useSelectedNoteView()
 
   return (
-    <Box component='form' onSubmit={handleSubmit(onSubmit)} display='flex' flexDirection='column' gap={2}>
+    <Box
+      component='form'
+      onSubmit={handleSubmit(onSubmit)}
+      display='flex'
+      flexDirection='column'
+      padding={2}
+      gap={2}>
       <input {...fileInputProps} onChange={handleFileInputChange} />
       <Stack direction='row' alignItems={'center'} justifyContent='space-between'>
         <Typography variant='h4'>{new Date(activeNote.date).toLocaleString()}</Typography>
         <Stack direction='row' spacing={1}>
-          <IconButton type='submit' disabled={isSaving}>
-            <SaveOutlined sx={iconsStyle} />
-          </IconButton>
-          <IconButton onClick={simulateFileInputClick}>
-            <FileUploadOutlined sx={iconsStyle} />
-          </IconButton>
-          <IconButton onClick={deleteActiveNote}>
-            <DeleteOutlined sx={iconsStyle} />
-          </IconButton>
+          <IconButton type='submit' disabled={isSaving} children={<SaveOutlined sx={iconsStyle} />} />
+          <IconButton onClick={simulateFileInputClick} children={<FileUploadOutlined sx={iconsStyle} />} />
+          <IconButton onClick={deleteActiveNote} children={<DeleteOutlined sx={iconsStyle} />} />
         </Stack>
       </Stack>
-      <TextField {...register('title')} {...textFieldsProps} label='Title' />
+      <TextField
+        {...register('title')}
+        {...textFieldsProps}
+        label='Title'
+        placeholder='How you want name this important note?'
+      />
       <TextField
         {...register('description')}
         {...textFieldsProps}

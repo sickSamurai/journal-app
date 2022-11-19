@@ -1,5 +1,5 @@
 import { Box, ImageList, ImageListItem } from '@mui/material'
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 
 interface Props {
   images: string[]

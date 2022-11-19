@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { useMyDispatch, useMySelector } from '../../../redux/hooks'
 import { closeSideBar } from '../../../redux/journal'
-import { MainTheme } from '../../../themes/MainTheme'
+import { MainTheme } from '../../shared/themes/MainTheme'
 
 type TypographyProps = TypographyPropsVariantOverrides
 
@@ -11,10 +11,10 @@ export const useSidebar = () => {
   const { user } = useMySelector(state => state.authReducer)
   const { notes, isSideBarOpen } = useMySelector(state => state.journalReducer)
   const dispatch = useMyDispatch()
-  const drawerWidth = '25%'
+  const width = '25%'
 
   const boxProps: BoxProps = {
-    width: drawerWidth,
+    width: width,
     display: { md: 'block', sm: 'none', xs: 'none' }
   }
 
@@ -23,7 +23,7 @@ export const useSidebar = () => {
     variant: 'permanent',
     PaperProps: {
       sx: {
-        width: drawerWidth,
+        width: width,
         boxSizing: 'border-box'
       }
     }
@@ -35,7 +35,7 @@ export const useSidebar = () => {
     variant: 'temporary',
     PaperProps: {
       sx: {
-        width: drawerWidth,
+        width: width,
         boxSizing: 'border-box'
       }
     }
@@ -48,9 +48,9 @@ export const useSidebar = () => {
     }
   }
 
-  const lessThanMid = useMediaQuery(MainTheme.breakpoints.down('md'))
+  const sizeIsLessThanMid = useMediaQuery(MainTheme.breakpoints.down('md'))
 
-  const drawerProps = lessThanMid ? temporaryDrawerProps : permanentDrawerProps
+  const drawerProps = sizeIsLessThanMid ? temporaryDrawerProps : permanentDrawerProps
 
   return { user, notes, boxProps, drawerProps, typographyProps }
 }

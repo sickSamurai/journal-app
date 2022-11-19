@@ -1,10 +1,10 @@
 import { tryGoogleSignIn, tryRegister, trySignIn } from '../../firebase'
-import { VoidThunkAction } from '../types/VoidThunkAction'
+import { MyThunkAction } from '../types/MyThunkAction'
 import { authSlice } from './authSlice'
 
 export const { startChecking, login, logout, fail, cleanErrors } = authSlice.actions
 
-export function registerThunk(name: string, email: string, password: string): VoidThunkAction {
+export function registerThunk(name: string, email: string, password: string): MyThunkAction {
   return async dispatch => {
     dispatch(startChecking())
     const { ok, user, error } = await tryRegister(name, email, password)
@@ -13,7 +13,7 @@ export function registerThunk(name: string, email: string, password: string): Vo
   }
 }
 
-export function signInThunk(email: string, password: string): VoidThunkAction {
+export function signInThunk(email: string, password: string): MyThunkAction {
   return async dispatch => {
     const { ok, user, error } = await trySignIn(email, password)
     if (ok) dispatch(login(user!))
@@ -21,7 +21,7 @@ export function signInThunk(email: string, password: string): VoidThunkAction {
   }
 }
 
-export function googleSignInThunk(): VoidThunkAction {
+export function googleSignInThunk(): MyThunkAction {
   return async dispatch => {
     dispatch(startChecking())
     const { ok, user, error } = await tryGoogleSignIn()

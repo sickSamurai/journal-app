@@ -9,7 +9,7 @@ export function Navbar(): JSX.Element {
   const { onLogout, onSidebarOpening } = useNavbar()
 
   return (
-    <AppBar position='static'>
+    <AppBar id='navbar' position='static'>
       <Toolbar component={Stack} direction='row' alignItems='center' spacing={2}>
         <IconButton sx={{ display: { md: 'none' } }} color='inherit' onClick={onSidebarOpening}>
           <MenuOutlined />

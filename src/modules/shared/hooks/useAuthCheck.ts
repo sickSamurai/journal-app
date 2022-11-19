@@ -1,11 +1,11 @@
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth'
 import { useEffect } from 'react'
 
-import { FirebaseAuth } from '../firebase'
-import { login, logout } from '../redux/auth'
-import { useMyDispatch, useMySelector } from '../redux/hooks'
-import { loadNotesThunk } from '../redux/journal'
-import { User } from '../types'
+import { FirebaseAuth } from '../../../firebase'
+import { login, logout } from '../../../redux/auth'
+import { useMyDispatch, useMySelector } from '../../../redux/hooks'
+import { loadNotesThunk } from '../../../redux/journal'
+import { User } from '../../../types'
 
 const toUser = (firebaseUser: FirebaseUser): User => ({
   uid: firebaseUser.uid,
